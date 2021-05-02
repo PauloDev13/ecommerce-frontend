@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Redirect } from 'react-router';
 
-import { authenticate, signin } from '../../auth';
+import { authenticate, isAuthenticated, signin } from '../../auth';
 import { showError, showLoading } from '../messages';
 
 const SingInForm = () => {
@@ -14,6 +14,7 @@ const SingInForm = () => {
   });
 
   const { email, password, error, loading, redirectToReferrer } = values;
+  const { user } = isAuthenticated();
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -38,7 +39,11 @@ const SingInForm = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-      return <Redirect to="/" />;
+      if (user && user.role === 1) {
+        return <Redirect to="/admin/dashboard" />;
+      } else {
+        return <Redirect to="/user/dashboard" />;
+      }
     }
   };
 

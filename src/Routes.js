@@ -10,7 +10,7 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <PrivateRoute path="/dashboard" exact>
+        <PrivateRoute path="/user/dashboard" exact>
           <UserDashboard />
         </PrivateRoute>
         <Route path="/" exact component={Home} />
