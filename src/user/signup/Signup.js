@@ -1,6 +1,6 @@
 // import { useState } from 'react';
 
-import Layout from '../core/Layout';
+import Layout from '../../core/Layout';
 // import { API } from '../config/configUrl';
 import SignUpForm from './SignUpForm';
 

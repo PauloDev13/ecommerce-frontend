@@ -2,7 +2,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Home from './core/Home';
 import Signin from './user/Signin';
-import Signup from './user/Signup';
+import Signup from './user/signup/Signup';
 
 const Routes = () => {
   return (

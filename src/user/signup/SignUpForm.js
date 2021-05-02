@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-
-import { API } from '../config/configUrl';
+// import { Link } from 'react-router-dom';
+import { signup } from '../../auth';
+import { showError, showSuccess } from './messages';
 
 const SignUpForm = () => {
   const [values, setValues] = useState({
@@ -16,22 +16,6 @@ const SignUpForm = () => {
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
-  };
-
-  const signup = async (user) => {
-    try {
-      const response = await fetch(`${API}/signup`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      });
-      return await response.json();
-    } catch (err) {
-      return console.error(err);
-    }
   };
 
   const clickSubmit = (event) => {
@@ -53,28 +37,28 @@ const SignUpForm = () => {
     });
   };
 
-  const showError = () => (
-    <div
-      className="alert alert-danger"
-      style={{ display: error ? '' : 'none' }}
-    >
-      {error}
-    </div>
-  );
+  // const showError = () => (
+  //   <div
+  //     className="alert alert-danger"
+  //     style={{ display: error ? '' : 'none' }}
+  //   >
+  //     {error}
+  //   </div>
+  // );
 
-  const showSuccess = () => (
-    <div
-      className="alert alert-info"
-      style={{ display: success ? '' : 'none' }}
-    >
-      Seu cadastro foi concluído. Faça <Link to="/signin">Login</Link>
-    </div>
-  );
+  // const showSuccess = () => (
+  //   <div
+  //     className="alert alert-info"
+  //     style={{ display: success ? '' : 'none' }}
+  //   >
+  //     Seu cadastro foi concluído. Faça <Link to="/signin">Login</Link>
+  //   </div>
+  // );
 
   return (
     <>
-      {showSuccess()}
-      {showError()}
+      {showSuccess(success)}
+      {showError(error)}
       <form>
         <div className="form-group">
           <label className="text-muted">Nome</label>
