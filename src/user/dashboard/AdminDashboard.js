@@ -4,7 +4,7 @@ import Layout from '../../core/Layout';
 
 const AdminDashboard = () => {
   const {
-    user: { _id, name, email, role },
+    user: { name, email },
   } = isAuthenticated();
 
   const adminLinks = () => (
@@ -31,9 +31,7 @@ const AdminDashboard = () => {
       <ul className="list-group">
         <li className="list-group-item">Nome: {name}</li>
         <li className="list-group-item">Email: {email}</li>
-        <li className="list-group-item">
-          Perfil: {role === 1 ? 'Administrador' : 'Usuário cadastrado'}
-        </li>
+        <li className="list-group-item">Perfil: Administrador</li>
       </ul>
     </div>
   );

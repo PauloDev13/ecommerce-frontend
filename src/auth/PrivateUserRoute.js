@@ -5,12 +5,12 @@ import { isAuthenticated } from '.';
 	Redireciona para a tela login se o usuário ainda não está autenticado.
 */
 
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateUserRoute = ({ children, ...rest }) => {
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        isAuthenticated() ? (
+        isAuthenticated() && isAuthenticated().user.role === 0 ? (
           children
         ) : (
           <Redirect
@@ -25,4 +25,4 @@ const PrivateRoute = ({ children, ...rest }) => {
   );
 };
 
-export default PrivateRoute;
+export default PrivateUserRoute;
