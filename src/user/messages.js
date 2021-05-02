@@ -11,3 +11,10 @@ export const showSuccess = (success) => (
     Seu cadastro foi concluído. Faça <Link to="/signin">Login</Link>
   </div>
 );
+
+export const showLoading = (loading) =>
+  loading && (
+    <div className="alert alert-info">
+      <h2>Conectando...</h2>
+    </div>
+  );
