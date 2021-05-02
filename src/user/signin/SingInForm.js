@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Redirect } from 'react-router';
 
-import { signin } from '../../auth';
+import { authenticate, signin } from '../../auth';
 import { showError, showLoading } from '../messages';
 
 const SingInForm = () => {
   const [values, setValues] = useState({
-    email: '',
-    password: '',
+    email: 'prmorais1302@gmail.com',
+    password: 'P@ulo1313',
     error: '',
     loading: false,
     redirectToReferrer: false,
@@ -26,9 +26,11 @@ const SingInForm = () => {
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
-        setValues({
-          ...values,
-          redirectToReferrer: true,
+        authenticate(data, () => {
+          setValues({
+            ...values,
+            redirectToReferrer: true,
+          });
         });
       }
     });
