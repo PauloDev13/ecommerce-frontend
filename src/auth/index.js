@@ -38,3 +38,17 @@ export const authenticate = (data, next) => {
     next();
   }
 };
+
+export const signout = async (next) => {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('jwt');
+    next();
+    return await fetch(`${API}/signout`, {
+      method: 'GET',
+    })
+      .then((response) => {
+        console.log('signout', response);
+      })
+      .catch((err) => console.error(err));
+  }
+};
