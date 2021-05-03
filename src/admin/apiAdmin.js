@@ -13,7 +13,7 @@ export const createCategory = async (userId, token, category) => {
     });
     return await response.json();
   } catch (err) {
-    return console.error(err);
+    return console.error('Ocorreu um erro ao salvar categoria', err);
   }
 };
 
@@ -29,6 +29,16 @@ export const createProduct = async (userId, token, product) => {
     });
     return await response.json();
   } catch (err) {
-    return console.error(err);
+    return console.error('Ocorreu um erro ao salvar produto', err);
   }
+};
+
+export const getCategories = async () => {
+  return await fetch(`${API}/categories`, {
+    method: 'GET',
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.error('Erro ao buscar categorias', err));
 };

@@ -7,8 +7,20 @@ export const showError = (error) => (
 );
 
 export const showSuccess = (success) => (
-  <div className="alert alert-info" style={{ display: success ? '' : 'none' }}>
+  <div
+    className="alert alert-success"
+    style={{ display: success ? '' : 'none' }}
+  >
     Seu cadastro foi concluído. Faça <Link to="/signin">Login</Link>
+  </div>
+);
+
+export const showSuccessProduct = (productCreated) => (
+  <div
+    className="alert alert-success"
+    style={{ display: productCreated ? '' : 'none' }}
+  >
+    <h4>{`${productCreated}`} cadastrado com sucesso!</h4>
   </div>
 );
 

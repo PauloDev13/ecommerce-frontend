@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Redirect } from 'react-router';
 
 import { authenticate, isAuthenticated, signin } from '../../auth';
-import { showError, showLoading } from '../messages';
+import { showError, showLoading } from '../../messages/messages';
 
 const SingInForm = () => {
   const [values, setValues] = useState({

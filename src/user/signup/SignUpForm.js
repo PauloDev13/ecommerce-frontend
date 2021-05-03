@@ -1,7 +1,7 @@
 import { useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { signup } from '../../auth';
-import { showError, showSuccess } from '../messages';
+import { showError, showSuccess } from '../../messages/messages';
 
 const SignUpForm = () => {
   const [values, setValues] = useState({

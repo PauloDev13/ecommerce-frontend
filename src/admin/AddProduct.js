@@ -2,7 +2,12 @@
 import { useEffect, useState } from 'react';
 import { isAuthenticated } from '../auth';
 import Layout from '../core/Layout';
-import { createProduct } from './apiAdmin';
+import {
+  showError,
+  showLoading,
+  showSuccessProduct,
+} from '../messages/messages';
+import { createProduct, getCategories } from './apiAdmin';
 
 const AddProduct = () => {
   const [values, setValues] = useState({
@@ -17,13 +22,15 @@ const AddProduct = () => {
     loading: false,
     error: '',
     productCreated: '',
+    success: false,
     redirectToProfile: false,
-    formData: '',
+    formData: new FormData(),
   });
 
   // Usa destruct para pegar os dados do usuário e o token
   const { user, token } = isAuthenticated();
 
+  // Usa destruct para pegar os dados do state
   const {
     name,
     description,
@@ -40,8 +47,19 @@ const AddProduct = () => {
     formData,
   } = values;
 
+  // Ler categorias e seta os valores no form data
+  const init = () => {
+    getCategories().then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setValues({ ...values, categories: data, formData: new FormData() });
+      }
+    });
+  };
+
   useEffect(() => {
-    setValues({ ...values, formData: new FormData() });
+    init();
   }, []);
 
   const handleChange = (name) => (event) => {
@@ -55,7 +73,7 @@ const AddProduct = () => {
     setValues({ ...values, error: '', loading: true });
     createProduct(user._id, token, formData).then((data) => {
       if (data.error) {
-        setValues({ ...values, error: data.error });
+        setValues({ ...values, error: data.error, productCreated: '' });
       } else {
         setValues({
           ...values,
@@ -65,7 +83,10 @@ const AddProduct = () => {
           photo: '',
           quantity: '',
           loading: false,
-          productCreated: data.name,
+          shipping: '',
+          categories: [],
+          error: '',
+          productCreated: data.product.name,
         });
       }
     });
@@ -73,13 +94,13 @@ const AddProduct = () => {
 
   const newPostForm = () => (
     <form className="mb-3" onSubmit={clickSubmit}>
-      <h4>Publicar foto</h4>
+      <h5>Publicar foto</h5>
       <div className="form-group">
         <label className="btn btn-secondary">
           <input
             type="file"
             accept="image/*"
-            value={photo}
+            name="photo"
             onChange={handleChange('photo')}
           />
         </label>
@@ -117,17 +138,22 @@ const AddProduct = () => {
       <div className="form-group">
         <label className="text-muted">Categoria</label>
         <select className="form-control" onChange={handleChange('category')}>
-          <option value="">Escolha uma categoria</option>
-          <option value="607e33aa4bb0e525bcf22325">Produtos temáticos</option>
+          <option>Escolha uma categoria</option>
+          {categories &&
+            categories.map((cat, index) => (
+              <option key={index} value={cat._id}>
+                {cat.name}
+              </option>
+            ))}
         </select>
       </div>
 
       <div className="form-group">
         <label className="text-muted">Enviado</label>
         <select className="form-control" onChange={handleChange('shipping')}>
-          <option value="">Escolha uma opção</option>
+          <option>Escolha uma opção</option>
           <option value="0">Não</option>
-          <option value="0">Sim</option>
+          <option value="1">Sim</option>
         </select>
       </div>
 
@@ -151,7 +177,12 @@ const AddProduct = () => {
       className="container"
     >
       <div className="row">
-        <div className="col-md-8 offset-md-2">{newPostForm()}</div>
+        <div className="col-md-8 offset-md-2">
+          {showLoading(loading)}
+          {showSuccessProduct(productCreated)}
+          {showError(error)}
+          {newPostForm()}
+        </div>
       </div>
     </Layout>
   );
