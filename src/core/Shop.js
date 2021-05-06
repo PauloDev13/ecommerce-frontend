@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getCategories } from './apiCore';
+import Checkbox from './Checkbox';
 import Layout from './Layout';
 
 const Shop = () => {
@@ -27,7 +28,12 @@ const Shop = () => {
       className="container-fluid"
     >
       <div className="row">
-        <div className="col-4">{JSON.stringify(categories)}</div>
+        <div className="col-4">
+          <h4>Filtrar por categoria</h4>
+          <ul>
+            <Checkbox categories={categories} />
+          </ul>
+        </div>
         <div className="col-8">direita</div>
       </div>
     </Layout>
