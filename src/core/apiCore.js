@@ -10,12 +10,22 @@ export const getProducts = async (sortBy) => {
     .catch((err) => console.error('Erro ao buscar categorias', err));
 };
 
-export const getPhoto = async (idProduct) => {
-  return await fetch(`${API}/product/photo/${idProduct}`, {
+export const getCategories = async () => {
+  return await fetch(`${API}/categories`, {
     method: 'GET',
   })
     .then((response) => {
       return response.json();
     })
-    .catch((err) => console.error('Erro ao buscar foto', err));
+    .catch((err) => console.error('Erro ao buscar categorias', err));
 };
+
+// export const getPhoto = async (idProduct) => {
+//   return await fetch(`${API}/product/photo/${idProduct}`, {
+//     method: 'GET',
+//   })
+//     .then((response) => {
+//       return response.json();
+//     })
+//     .catch((err) => console.error('Erro ao buscar foto', err));
+// };
